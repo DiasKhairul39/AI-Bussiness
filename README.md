@@ -55,13 +55,17 @@ Buka [http://localhost:3000](http://localhost:3000) di peramban Anda.
 3. Klik **Deploy**.
 
 ### Opsi B: Production-Grade Infrastructure (Alibaba Cloud ECS) - *Arsitektur Utama*
-Untuk kebutuhan lingkungan *live production*, antarmuka ini dijalankan mandiri di dalam server **Alibaba Cloud ECS** bersama dengan Nginx Reverse Proxy dan PM2 Process Manager:
-1. Hubungkan server ke repositori dan lakukan kompilasi:
+Untuk menyatukan ekosistem aplikasi, antarmuka frontend Next.js dijalankan mandiri di dalam server ECS yang sama menggunakan PM2 Process Manager:
+1. Masuk ke direktori folder frontend Anda di ECS: `cd /root/AI-Bussiness`.
+2. Buat file `.env.production` dan arahkan variabel ke subdomain API:
+   ```env
+   NEXT_PUBLIC_API_URL=https://bi-api.bonodigital.biz.id
+   ```
+3. Pastikan runtime Node.js v18 aktif, bangun berkas biner produksi, dan jalankan menggunakan PM2 di port `3000`:
    ```bash
+   nvm use 18
+   npm install
    npm run build
-   ```
-2. Jalankan proses di latar belakang menggunakan PM2:
-   ```bash
    pm2 start npm --name "nextjs-frontend" -- run start
+   pm2 save
    ```
-3. Trafik luar diatur melalui gerbang **Nginx** di port `443` terproteksi SSL penuh dari **Cloudflare**.
