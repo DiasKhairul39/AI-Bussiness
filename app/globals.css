@@ -1,0 +1,54 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html { color-scheme: dark; }
+html.light { color-scheme: light; }
+html, body { height: 100%; }
+
+body {
+  @apply bg-gradient-to-b from-[#060A12] via-[#070F1D] to-[#050811] text-slate-100;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+html.light body {
+  background: linear-gradient(180deg, #f0f4ff 0%, #e8eef8 100%);
+  color: #0f172a;
+}
+
+/* scrollbar */
+*::-webkit-scrollbar { width: 8px; height: 8px; }
+*::-webkit-scrollbar-thumb { background: rgba(148,163,184,.2); border-radius: 999px; }
+*::-webkit-scrollbar-track { background: rgba(148,163,184,.06); }
+
+/* BUG D FIX: keyframes di @layer base agar tidak di-purge production */
+@layer base {
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(10px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes shimmer {
+    0%   { background-position: -200% 0; }
+    100% { background-position: 200% 0; }
+  }
+}
+
+@layer utilities {
+  .animate-fade-in { animation: fadeInUp 0.35s ease both; }
+  .delay-1 { animation-delay: 0.08s; }
+  .delay-2 { animation-delay: 0.16s; }
+  .delay-3 { animation-delay: 0.24s; }
+  .delay-4 { animation-delay: 0.32s; }
+  .delay-5 { animation-delay: 0.40s; }
+}
+
+/* Light mode overrides */
+html.light .border-white\/10       { border-color: rgba(15,23,42,.1) !important; }
+html.light .bg-white\/\[0\.03\]    { background-color: rgba(255,255,255,.75) !important; }
+html.light .bg-black\/20           { background-color: rgba(255,255,255,.55) !important; }
+html.light .bg-black\/30           { background-color: rgba(255,255,255,.65) !important; }
+html.light .text-slate-300\/60     { color: rgba(15,23,42,.55) !important; }
+html.light .text-slate-400         { color: #64748b !important; }
+html.light .text-slate-100         { color: #0f172a !important; }
+html.light .text-slate-200\/90     { color: rgba(15,23,42,.85) !important; }
+html.light .placeholder\:text-slate-500::placeholder { color: #94a3b8 !important; }
