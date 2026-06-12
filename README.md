@@ -61,11 +61,12 @@ Untuk menyatukan ekosistem aplikasi, antarmuka frontend Next.js dijalankan mandi
    ```env
    NEXT_PUBLIC_API_URL=https://bi-api.bonodigital.biz.id
    ```
-3. Pastikan runtime Node.js v18 aktif, bangun berkas biner produksi, dan jalankan menggunakan PM2 di port `3000`:
+3. Pastikan file skrip otomatisasi memiliki izin eksekusi:
    ```bash
-   nvm use 18
-   npm install
-   npm run build
-   pm2 start npm --name "nextjs-frontend" -- run start
-   pm2 save
+   chmod +x deploy_frontend.sh
    ```
+4. Jalankan skrip untuk melakukan pembaruan otomatis (menarik kode, instalasi dependensi, kompilasi ulang, dan restart PM2):
+   ```bash
+   ./deploy_frontend.sh
+   ```
+
